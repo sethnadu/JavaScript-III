@@ -41,7 +41,97 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+function GameObject(info) {
+  this.createdAt = info.createdAt;
+  this.name = info.name;
+  this.dimensions = info.dimensions;
+};
+
+GameObject.prototype.destroy = function () {
+  return `${this.name} was removed from the game.`;
+};
+
+
+
+function CharacterStats(info) {
+  GameObject.call(this, info) 
+  this.healthPoints = info.healthPoints;
+
+};
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
+CharacterStats.prototype.takeDamage = function() {
+  return `${this.name} took damage`;
+
+};
+
+
+
+function Humanoid(info) {
+  CharacterStats.call(this, info) 
+  this.team = info.team;
+  this.weapons = info.weapons;
+  this.language = info.language;
+  
+};
+
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a greeting in ${this.language}`;
+}
+
+/////STRETCH////
+
+function Hero(info) {
+  Humanoid.call(this, info)
+  this.secretAbility = info.secretAbility;
+  this.hitPoints = info.hitPoints;
+};
+
+Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype.proclamation = function() {
+  return `I ${this.name} am here to save you!`
+}
+
+Hero.prototype.hit = function() {
+  return `${this.name} has struck you ${this.hitPoints} damage`
+};
+
+Villian.prototype.hitPoints = function(min, max) {
+  return Math.random() * (max - min) + min; 
+};
+
+
+
+
+
+
+
+function Villian(info) {
+  Humanoid.call(this, info)
+  this.secretPower = info.secretPower;
+  this.hitPoints = info.hitPoints;
+};
+
+Villian.prototype = Object.create(Humanoid.prototype);
+Villian.prototype.proclamation = function() {
+  return `I ${this.name} am here to get you!`
+}
+
+Villian.prototype.hit = function() {
+  return `${this.name} has struck you ${villian.prototype.hitPoints()} damage`
+};
+
+Villian.prototype.hitPoints = function(min, max) {
+    return Math.random() * (max - min) + min; 
+  };
+
+
+
+
+
+
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -92,6 +182,55 @@
     language: 'Elvish',
   });
 
+/////STRETCH//////
+const monster = new Humanoid({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 3,
+    height: 6,
+  },
+  healthPoints: 50,
+  team: 'Mordor',
+  weapons: [
+    'Claws',
+    'Sword',
+  ],
+  language: ['Orc', 'Elvish']
+});
+
+
+  const aragorn = new Hero({ 
+  healthPoints: 40,
+  dimensions: archer.dimensions,
+  name: 'Aragorn',
+  team: 'The Fellowship',
+  weapons: [
+    'Bow',
+    'Sword',
+  ],
+  secretAbility: 'Army of Dead',
+  language: ['Common Tongue', 'Elvish'],
+  });
+
+  const sauron = new Villian({
+    healthPoints: 100,
+    dimensions: monster.dimensions,
+    name: 'Sauron',
+    team: 'Dark Power',
+    weapons: [
+      'The Ring',
+      'Flail'
+    ],
+    secretPower: 'Mindcontrol',
+    language: ['Common Tongue', 'Orc', 'Elvish'],
+  });
+
+
+
+         
+
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -102,7 +241,13 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+  console.log(aragorn.proclamation());
+  console.log(aragorn.secretAbility);
+  console.log(aragorn.dimensions);
+  console.log(sauron);
+  // console.log(sauron.hitPoints());
+  // console.log(aragorn.hitPoints());
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
